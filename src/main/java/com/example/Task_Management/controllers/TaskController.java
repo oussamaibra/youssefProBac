@@ -25,6 +25,12 @@ public class TaskController {
     {
         return taskService.getTasks();
     }
+    
+    @GetMapping("/task/user/{id}")
+    public List<Task> getTasksByUSer(@PathVariable Long id)
+    {
+        return taskService.getTasksByUserId(id);
+    }
 
     @GetMapping("/task/{id}")
     public Task getTask(@PathVariable Long id)
@@ -62,7 +68,7 @@ public class TaskController {
             task1.setDescription(task.getDescription());
             task1.setDueDate(task.getDueDate());
             task1.setType(task.getType());
-            taskService.save(task);
+            taskService.save(task1);
             return ResponseEntity.ok().body(task1);
         }
         else
@@ -81,7 +87,7 @@ public class TaskController {
             taskService.deleteTask(id);
             HashMap<String, String> message = new HashMap<>();
             message.put("message", "Task with id " + id + "deleted successfully.");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
+            return ResponseEntity.ok().body(message);
         }
         else {
             HashMap<String, String> message = new HashMap<>();
