@@ -12,16 +12,16 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class Task {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "Id")
-    private Long id;
-    private String title;
-    private String user_id;
-    private String type;
-    private Date dueDate;
-    private String description;
+public class Notification {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "Id")
+	private Long id;
+	private String title;
+	private String user_id;
+	private String type;
+	private Date dueDate;
+	private String description;
 	public String getTitle() {
 		return title;
 	}
@@ -52,5 +52,6 @@ public class Task {
 	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
 	}
+
 
 }

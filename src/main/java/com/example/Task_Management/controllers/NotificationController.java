@@ -1,7 +1,9 @@
 package com.example.Task_Management.controllers;
 
 import com.example.Task_Management.dto.CountType;
+import com.example.Task_Management.entities.Notification;
 import com.example.Task_Management.entities.Task;
+import com.example.Task_Management.services.NotificationService;
 import com.example.Task_Management.services.TaskService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -16,85 +18,39 @@ import java.util.List;
 @AllArgsConstructor
 @CrossOrigin("*")
 @RequestMapping("/api/v1")
-public class TaskController {
+public class NotificationController {
 
-    private TaskService taskService;
+    private NotificationService notificationService;
 
-    @GetMapping("/task")
-    public List<Task> getTasks()
+    @GetMapping("/notification")
+    public List<Notification> getNotifications()
     {
-        return taskService.getTasks();
-    }
-    
-    @GetMapping("/task/user/{id}")
-    public List<Task> getTasksByUSer(@PathVariable Long id)
-    {
-        return taskService.getTasksByUserId(id);
+        return notificationService.getNotifications();
     }
 
-    @GetMapping("/task/{id}")
-    public Task getTask(@PathVariable Long id)
+    @GetMapping("/notification/user/{id}")
+    public List<Notification> getNotificationsByUSer(@PathVariable Long id)
     {
-        return taskService.getTaskById(id).
+        return notificationService.getNotificationsByUserId(id);
+    }
+
+    @GetMapping("/notification/{id}")
+    public Notification getNotificationById(@PathVariable Long id)
+    {
+        return notificationService.getNotificationsById(id).
                 orElseThrow
                         (
-                                ()->new EntityNotFoundException("Requested task not found")
+                                ()->new EntityNotFoundException("Requested notification not found")
                         );
     }
 
-    @GetMapping("/task/vData/percentCountType")
-    List<CountType> getPercentageGroupByType()
-    {
-        return taskService.getPercentageGroupByType();
-    }
 
-    @PostMapping("/task")
-    public Task addTask(@RequestBody Task task)
+    @PostMapping("/notification")
+    public Notification addTask(@RequestBody Notification notification)
     {
-        return taskService.save(task);
+        return notificationService.save(notification);
 
     }
 
-    @PutMapping("task/{id}")
-    public ResponseEntity<?> addTask(@RequestBody Task task, @PathVariable Long id)
-    {
-        if (taskService.existsById(id))
-        {
-            Task task1 = taskService.getTaskById(id).
-                    orElseThrow(
-                            ()->new EntityNotFoundException("Requested task not found")
-                    );
-            task1.setTitle(task.getTitle());
-            task1.setDescription(task.getDescription());
-            task1.setDueDate(task.getDueDate());
-            task1.setType(task.getType());
-            taskService.save(task1);
-            return ResponseEntity.ok().body(task1);
-        }
-        else
-        {
-            HashMap<String, String> message = new HashMap<>();
-            message.put("message", id + "task not found or matched");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-        }
-    }
-
-    @DeleteMapping("task/{id}")
-    public ResponseEntity<?> deleteTask(@PathVariable Long id)
-    {
-        if (taskService.existsById(id))
-        {
-            taskService.deleteTask(id);
-            HashMap<String, String> message = new HashMap<>();
-            message.put("message", "Task with id " + id + "deleted successfully.");
-            return ResponseEntity.ok().body(message);
-        }
-        else {
-            HashMap<String, String> message = new HashMap<>();
-            message.put("message", id + "task not found or matched");
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
-
-        }
-    }
 }
 
