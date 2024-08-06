@@ -63,6 +63,7 @@ public class AuthController {
             authenticationResponse.setJwt(jwtToken);
             authenticationResponse.setUserId(optionalUser.get().getId());
             authenticationResponse.setUserRole(optionalUser.get().getUserRole());
+            authenticationResponse.setName(optionalUser.get().getUserDto().getName());
         }
         return authenticationResponse;
     }

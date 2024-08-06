@@ -1,6 +1,7 @@
 package com.example.Task_Management.repositories;
 
 import com.example.Task_Management.dto.CountType;
+import com.example.Task_Management.entities.Chat;
 import com.example.Task_Management.entities.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

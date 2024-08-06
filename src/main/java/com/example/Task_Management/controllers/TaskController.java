@@ -1,6 +1,7 @@
 package com.example.Task_Management.controllers;
 
 import com.example.Task_Management.dto.CountType;
+import com.example.Task_Management.entities.Chat;
 import com.example.Task_Management.entities.Task;
 import com.example.Task_Management.services.TaskService;
 import jakarta.persistence.EntityNotFoundException;
@@ -26,10 +27,23 @@ public class TaskController {
         return taskService.getTasks();
     }
     
+    @GetMapping("/chat")
+    public List<Chat> getChats()
+    {
+        return taskService.getChats();
+    }
+
+    
     @GetMapping("/task/user/{id}")
     public List<Task> getTasksByUSer(@PathVariable Long id)
     {
         return taskService.getTasksByUserId(id);
+    }
+    
+    @GetMapping("/chat/user/{id}")
+    public List<Chat> getChatByUSer(@PathVariable Long id)
+    {
+        return taskService.getChatByUserId(id);
     }
 
     @GetMapping("/task/{id}")
@@ -52,6 +66,13 @@ public class TaskController {
     public Task addTask(@RequestBody Task task)
     {
         return taskService.save(task);
+
+    }
+    
+    @PostMapping("/chat")
+    public Chat addChat(@RequestBody Chat chat)
+    {
+        return taskService.saveChat(chat);
 
     }
 
