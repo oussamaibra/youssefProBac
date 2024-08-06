@@ -19,6 +19,12 @@ public class TaskService {
     {
         return taskRepository.getAllTaskByDueDate();
     }
+    
+    public List<Task> getTasksByUserId(Long user_id)
+    {
+    		System.out.println("eeeeeeeeeeeeee"+user_id);
+        return taskRepository.getAllTaskByUserId(user_id);
+    }
 
     public Optional<Task> getTaskById(Long id)
     {
