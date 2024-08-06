@@ -1,13 +1,11 @@
 package com.example.Task_Management.controllers.employee;
 
 import com.example.Task_Management.dto.ProjectDTO;
+import com.example.Task_Management.entities.User;
 import com.example.Task_Management.services.employee.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,4 +20,10 @@ public class EmployeeController {
     public ResponseEntity<List<ProjectDTO>> getProjectsByUserId() {
        return ResponseEntity.ok(employeeService.getProjectsByUserId());
     }
+
+    @GetMapping("/id")
+    public ResponseEntity<User> getUserById() {
+        return ResponseEntity.ok(employeeService.getUserById());
+    }
+
 }

@@ -33,4 +33,14 @@ public class EmployeeServiceImpl implements EmployeeService{
         }
         throw new EntityNotFoundException("User not found");
     }
+
+
+
+    public User getUserById() {
+        User user =jwtUtil.getLoggedInUser();
+        if (user != null){
+            return user;
+        }
+        throw new EntityNotFoundException("User not found");
+    }
 }
