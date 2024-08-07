@@ -67,4 +67,37 @@ public class AuthController {
         }
         return authenticationResponse;
     }
+
+    @PostMapping("/logingmail")
+    public AuthenticationResponse loginGmail(@RequestBody String email){
+
+        Optional<User> user =  userRepository.findFirstByEmail(email);
+        AuthenticationRequest authenticationRequest = new AuthenticationRequest();
+
+        if (user.isPresent()){
+            authenticationRequest.setEmail(user.get().getEmail());
+            authenticationRequest.setPassword(user.get().getPassword());
+        }else {
+            throw new BadCredentialsException("Incorrect username or password");
+        }
+
+
+        final UserDetails userDetails = userService.userDetailService().loadUserByUsername(authenticationRequest.getEmail());
+
+
+        Optional<User> optionalUser = userRepository.findFirstByEmail(authenticationRequest.getEmail());
+        final String jwtToken = jwtUtil.generateToken(userDetails);
+        AuthenticationResponse authenticationResponse = new AuthenticationResponse();
+
+
+
+        if (optionalUser.isPresent()) {
+            authenticationResponse.setJwt(jwtToken);
+            authenticationResponse.setUserId(optionalUser.get().getId());
+            authenticationResponse.setUserRole(optionalUser.get().getUserRole());
+            authenticationResponse.setName(optionalUser.get().getUserDto().getName());
+        }
+        return authenticationResponse;
+    }
+
 }
